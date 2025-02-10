@@ -59,6 +59,10 @@
         A --> B{¿Especial complejidad técnica?};
         MC --> WA[WhatsApp];
         MC --> FB[Facebook];
+        MC --> IG[Instagram];
+        MC --> NT[Número Telefónico];
+        MC --> PF[Página Falsa];
+        MC --> CE[Correo Electrónico];
     
         B -- Sí --> C[Comunicar a Fiscalía de Cibercrimen y a Fiscalía D2T7];
         C --> D{¿Es mayor a un millón de pesos?};
@@ -112,9 +116,17 @@
         // Asociar clic a los nodos interactivos
         document.body.addEventListener("click", (e) => {
             if (e.target.textContent === "WhatsApp") {
-                openPopup("Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones");
+                openPopup("Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones");
             } else if (e.target.textContent === "Facebook") {
-                openPopup("Relevamiento y preservación de cuenta");
+                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
+            } else if (e.target.textContent === "Instagram") {
+                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
+            } else if (e.target.textContent === "Número Telefónico") {
+                openPopup("Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones");
+            } else if (e.target.textContent === "Página Falsa") {
+                openPopup("NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense");
+            } else if (e.target.textContent === "Correo Electrónico") {
+                openPopup("NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense");
             }
         });
 
