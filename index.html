@@ -67,9 +67,9 @@
         B -- Sí --> C[Comunicar a Fisc. de Cibercrimen y a Fisc. D2T7];
         C --> D{¿Es mayor a un millón de pesos?};
     
-        B --> E[No]
+        B --> E[No es mayor]
     
-        D -- No --> H[Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos];
+        D --> F[No] --> H[Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos];
         H --> I[Oficio para informe del banco/billetera del damnificado];
 
         D -- Sí --> J{¿Es horario hábil?};
@@ -130,6 +130,12 @@
                     "1. Comunicar a Fiscalía Distrito 2 Turno 7°. \n" +
                     "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
                     "3. Realizar Oficio para informe del banco/billetera del damnificado. \n" +
+                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
+            } else if (e.target.textContent === "No es mayor") {
+                openPopup(
+                    "1. Comunicar a FEC. \n" +
+                    "2. Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
                     "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
                 );
             }
