@@ -8,78 +8,16 @@
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
         mermaid.initialize({ startOnLoad: true });
     </script>
-
     <style>
-        /* Estilo para el nodo emergente */
         .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            max-width: 300px;
-            text-align: center;
-        }
-        .popup .close-btn {
-            display: block;
-            margin-top: 10px;
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .popup .close-btn:hover {
-            background-color: #0056b3;
-        }
-        /* Fondo oscuro para el modal */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
-</head>
-<body>
-
-<h2>Flujograma de Ejemplo</h2>
-
-<div class="mermaid">
-    graph TD;
-        A[Estafas] --> MC[Medios de Comunicación];
-        MC --> WA[WhatsApp];
-        MC --> FB[Facebook];
-</div>
-
-<!-- Nodo emergente -->
-<div class="popup-overlay" id="popup-overlay"></div>
-<div class="popup" id="popup">
-    <p id="popup-content"></p>
-    <a href="#" class="close-btn" id="close-popup">Cerrar</a>
-</div>
-
-    <style>
-        .tooltip {
             position: absolute;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
             border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
-            font-size: 0.9rem;
-            max-width: 300px;
         }
     </style>
 </head>
@@ -87,92 +25,62 @@
 
 <h2>Flujograma de Ejemplo</h2>
 
-<div id="tooltip" class="tooltip"></div>
-
 <div class="mermaid">
     graph TD;
-        A[Estafas] --> B{¿Especial complejidad técnica?}
-        A --> MC[Medios de Comunicación]
-        MC --> W[WhatsApp]
-        MC --> F[Facebook]
+        A[Estafas] --> R[Medios de Comunicación];
+        R --> S[WhatsApp];
+        R --> T[Facebook];
+        A --> B{¿Especial complejidad técnica?};
     
-        B -- Sí --> C[Comunicar a Fiscalía de Cibercrimen y a Fiscalía D2T7]
-        C --> D{¿Es mayor a un millón de pesos?}
+        B -- Sí --> C[Comunicar a Fiscalía de Cibercrimen y a Fiscalía D2T7];
+        C --> D{¿Es mayor a un millón de pesos?};
     
-        B -- No --> E[Comunicar a Fiscalía D2T7]
-        E --> F2[Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos]
-        F2 --> G[Oficio para informe del banco/billetera del damnificado]
+        B -- No --> E[Comunicar a Fiscalía D2T7];
+        E --> F[Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos];
+        F --> G[Oficio para informe del banco/billetera del damnificado];
     
-        D -- No --> H[Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos]
-        H --> I[Oficio para informe del banco/billetera del damnificado]
+        D -- No --> H[Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos];
+        H --> I[Oficio para informe del banco/billetera del damnificado];
 
-        D -- Sí --> J{¿Es horario hábil?}
-        J -- Sí --> K[Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad]
-        K --> L[Oficio para informe del banco/billetera del damnificado]
+        D -- Sí --> J{¿Es horario hábil?};
+        J -- Sí --> K[Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad];
+        K --> L[Oficio para informe del banco/billetera del damnificado];
 
-        J -- No --> M[Avisar a Secretaría de FEC]
-        M --> N[Incorporar certificado que autoriza]
-        N --> O[Realizar Oficio de Levantamiento de Secreto Bancario y Bloqueo de Fondos]
-        O --> P[Oficio para Bloqueo de COELSA]
-        P --> Q[Comunicarlo a UJ Delitos Económicos para que carguen en la plataforma]
+        J -- No --> M[Avisar a Secretaría de FEC];
+        M --> N[Incorporar certificado que autoriza];
+        N --> O[Realizar Oficio de Levantamiento de Secreto Bancario y Bloqueo de Fondos];
+        O --> P[Oficio para Bloqueo de COELSA];
+        P --> Q[Comunicarlo a UJ Delitos Económicos para que carguen en la plataforma];
 </div>
+
+<!-- Contenedor para los nodos emergentes -->
+<div id="popup" class="popup"></div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const tooltip = document.getElementById("tooltip");
-
-        // Función para mostrar el tooltip
-        const showTooltip = (text, event) => {
-            tooltip.textContent = text;
-            tooltip.style.display = "block";
-            tooltip.style.left = `${event.pageX + 10}px`;
-            tooltip.style.top = `${event.pageY + 10}px`;
+        // Nodos interactivos
+        const popup = document.getElementById("popup");
+        const nodes = {
+            "S": "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
+            "T": "Facebook: Relevamiento y preservación de cuenta"
         };
 
-        // Función para ocultar el tooltip
-        const hideTooltip = () => {
-            tooltip.style.display = "none";
-        };
-
-        // Añadir interactividad después de que Mermaid renderice el diagrama
-        const addInteractivity = () => {
-            const whatsappNode = document.querySelector('[id*="W"]');
-            const facebookNode = document.querySelector('[id*="F"]');
-
-            if (whatsappNode) {
-                whatsappNode.style.cursor = "pointer";
-                whatsappNode.addEventListener("click", (event) => {
-                    showTooltip(
-                        "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
-                        event
-                    );
-                });
-            }
-
-            if (facebookNode) {
-                facebookNode.style.cursor = "pointer";
-                facebookNode.addEventListener("click", (event) => {
-                    showTooltip(
-                        "Facebook: Relevamiento y preservación de cuenta",
-                        event
-                    );
-                });
-            }
-
-            // Ocultar el tooltip si se hace clic fuera de los nodos
-            document.body.addEventListener("click", (event) => {
-                if (
-                    !event.target.closest('[id*="W"]') &&
-                    !event.target.closest('[id*="F"]')
-                ) {
-                    hideTooltip();
+        document.body.addEventListener("click", (e) => {
+            const target = e.target.closest("g[class*='node']");
+            if (target) {
+                const nodeId = target.querySelector("title").textContent.trim();
+                if (nodes[nodeId]) {
+                    popup.textContent = nodes[nodeId];
+                    popup.style.display = "block";
+                    popup.style.left = `${e.pageX + 10}px`;
+                    popup.style.top = `${e.pageY + 10}px`;
+                } else {
+                    popup.style.display = "none";
                 }
-            });
-        };
-
-        // Esperar a que Mermaid renderice el gráfico
-        mermaid.init(undefined, document.querySelectorAll(".mermaid"));
-        setTimeout(addInteractivity, 100); // Asegura que el DOM de Mermaid esté listo
+            } else {
+                popup.style.display = "none";
+            }
+        });
     });
 </script>
 
