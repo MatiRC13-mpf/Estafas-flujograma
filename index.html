@@ -13,7 +13,7 @@
             position: absolute;
             background-color: white;
             border: 1px solid #ccc;
-            padding: 15px;
+            padding: 10px;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: none;
@@ -60,32 +60,27 @@
     document.addEventListener("DOMContentLoaded", () => {
         const popup = document.getElementById("popup");
         
-        // Mapear los mensajes emergentes según el nodo
-        const nodesInfo = {
+        // Información de los nodos
+        const nodeInfo = {
             "WhatsApp": "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
             "Facebook": "Facebook: Relevamiento y preservación de cuenta"
         };
 
-        // Detectar nodos y asignar eventos
+        // Esperar a que Mermaid renderice los nodos
+        mermaid.initialize({ startOnLoad: true });
         setTimeout(() => {
-            // Seleccionar los nodos generados por Mermaid
-            const whatsappNode = document.querySelector('div[data-id="S"]');
-            const facebookNode = document.querySelector('div[data-id="T"]');
-            
-            if (whatsappNode) {
-                whatsappNode.style.cursor = "pointer";
-                whatsappNode.addEventListener("click", (e) => {
-                    showPopup(e, nodesInfo["WhatsApp"]);
-                });
-            }
-
-            if (facebookNode) {
-                facebookNode.style.cursor = "pointer";
-                facebookNode.addEventListener("click", (e) => {
-                    showPopup(e, nodesInfo["Facebook"]);
-                });
-            }
-        }, 500); // Esperar a que Mermaid renderice los nodos
+            // Detectar los nodos generados
+            const nodes = document.querySelectorAll("svg g[class*='node']");
+            nodes.forEach((node) => {
+                const label = node.querySelector("text").textContent.trim();
+                if (nodeInfo[label]) {
+                    node.style.cursor = "pointer";
+                    node.addEventListener("click", (event) => {
+                        showPopup(event, nodeInfo[label]);
+                    });
+                }
+            });
+        }, 500);
 
         // Mostrar popup
         function showPopup(event, message) {
@@ -95,9 +90,9 @@
             popup.style.top = `${event.pageY + 10}px`;
         }
 
-        // Ocultar popup al hacer clic en cualquier lugar
-        document.body.addEventListener("click", (e) => {
-            if (!e.target.closest(".popup")) {
+        // Ocultar popup al hacer clic fuera
+        document.body.addEventListener("click", (event) => {
+            if (!event.target.closest(".popup")) {
                 popup.style.display = "none";
             }
         });
