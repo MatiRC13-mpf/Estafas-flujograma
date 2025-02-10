@@ -67,13 +67,12 @@
         B -- Sí --> C[Comunicar a Fisc. de Cibercrimen y a Fisc. D2T7];
         C --> D{¿Es mayor a un millón de pesos?};
     
-        B --> E[No]
+        B --> E[No];
     
-        D --> F[No es mayor]
+        D --> F[No es mayor];
     
         D -- Sí --> J{¿Es horario hábil?};
-        J -- Sí --> K[Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad];
-        K --> L[Oficio para informe del banco/billetera del damnificado];
+        J --> K[Sí];
 
         J -- No --> M[Avisar a Secretaría de FEC];
         M --> N[Incorporar certificado que autoriza];
@@ -134,6 +133,12 @@
                 openPopup(
                     "1. Comunicar a FEC. \n" +
                     "2. Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
+                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
+            } else if (e.target.textContent === "No es mayor") {
+                openPopup(
+                    "1. Comunicar a FEC. \n" +
+                    "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
                     "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
                     "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
                 );
