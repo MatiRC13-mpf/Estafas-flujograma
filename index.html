@@ -58,26 +58,46 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // Nodos interactivos
         const popup = document.getElementById("popup");
-        const nodes = {
-            "S": "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
-            "T": "Facebook: Relevamiento y preservación de cuenta"
+        
+        // Mapear los mensajes emergentes según el nodo
+        const nodesInfo = {
+            "WhatsApp": "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
+            "Facebook": "Facebook: Relevamiento y preservación de cuenta"
         };
 
+        // Detectar nodos y asignar eventos
+        setTimeout(() => {
+            // Seleccionar los nodos generados por Mermaid
+            const whatsappNode = document.querySelector('div[data-id="S"]');
+            const facebookNode = document.querySelector('div[data-id="T"]');
+            
+            if (whatsappNode) {
+                whatsappNode.style.cursor = "pointer";
+                whatsappNode.addEventListener("click", (e) => {
+                    showPopup(e, nodesInfo["WhatsApp"]);
+                });
+            }
+
+            if (facebookNode) {
+                facebookNode.style.cursor = "pointer";
+                facebookNode.addEventListener("click", (e) => {
+                    showPopup(e, nodesInfo["Facebook"]);
+                });
+            }
+        }, 500); // Esperar a que Mermaid renderice los nodos
+
+        // Mostrar popup
+        function showPopup(event, message) {
+            popup.textContent = message;
+            popup.style.display = "block";
+            popup.style.left = `${event.pageX + 10}px`;
+            popup.style.top = `${event.pageY + 10}px`;
+        }
+
+        // Ocultar popup al hacer clic en cualquier lugar
         document.body.addEventListener("click", (e) => {
-            const target = e.target.closest("g[class*='node']");
-            if (target) {
-                const nodeId = target.querySelector("title").textContent.trim();
-                if (nodes[nodeId]) {
-                    popup.textContent = nodes[nodeId];
-                    popup.style.display = "block";
-                    popup.style.left = `${e.pageX + 10}px`;
-                    popup.style.top = `${e.pageY + 10}px`;
-                } else {
-                    popup.style.display = "none";
-                }
-            } else {
+            if (!e.target.closest(".popup")) {
                 popup.style.display = "none";
             }
         });
