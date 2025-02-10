@@ -57,15 +57,23 @@
     graph TD;
         A[Estafas] --> MC[Medios de Comunicación];
         A --> B{¿Especial complejidad técnica?};
-
-        click MC "javascript:showMedios()";
-
+        MC --> WA[WhatsApp];
+        MC --> FB[Facebook];
+        MC --> IG[Instagram];
+        MC --> NT[Número Telefónico];
+        MC --> PF[Página Falsa];
+        MC --> CE[Correo Electrónico];
+    
         B -- Sí --> C[Comunicar a Fisc. de Cibercrimen y a Fisc. D2T7];
         C --> D{¿Es mayor a un millón de pesos?};
+    
         B --> E[No];
+    
         D --> F[No es mayor];
+    
         D -- Sí --> J{¿Es horario hábil?};
         J --> K[Sí];
+
         J -- No --> M[Avisar a Secretaría de FEC];
         M --> N[Incorporar certificado que autoriza];
         N --> O[Realizar Oficio de Levantamiento de Secreto Bancario y Bloqueo de Fondos];
@@ -82,54 +90,69 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        // Mostrar popup con contenido específico
         const popup = document.getElementById("popup");
         const overlay = document.getElementById("popup-overlay");
         const popupContent = document.getElementById("popup-content");
         const closePopup = document.getElementById("close-popup");
 
+        // Función para abrir el popup
         function openPopup(content) {
-            popupContent.innerHTML = content;
+            popupContent.textContent = content;
             popup.style.display = "block";
             overlay.style.display = "block";
         }
 
+        // Función para cerrar el popup
         function closeModal() {
             popup.style.display = "none";
             overlay.style.display = "none";
         }
 
+        // Asociar clic a los nodos interactivos
+        document.body.addEventListener("click", (e) => {
+            if (e.target.textContent === "WhatsApp") {
+                openPopup("Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones");
+            } else if (e.target.textContent === "Facebook") {
+                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
+            } else if (e.target.textContent === "Instagram") {
+                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
+            } else if (e.target.textContent === "Número Telefónico") {
+                openPopup("Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones");
+            } else if (e.target.textContent === "Página Falsa") {
+                openPopup("NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense");
+            } else if (e.target.textContent === "Correo Electrónico") {
+                openPopup("NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense");
+            } else if (e.target.textContent === "No") {
+                openPopup(
+                    "1. Comunicar a Fiscalía Distrito 2 Turno 7°. \n" +
+                    "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+                    "3. Realizar Oficio para informe del banco/billetera del damnificado. \n" +
+                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
+            } else if (e.target.textContent === "No es mayor") {
+                openPopup(
+                    "1. Comunicar a FEC. \n" +
+                    "2. Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
+                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
+            } else if (e.target.textContent === "Sí") {
+                openPopup(
+                    "1. Comunicar a FEC. \n" +
+                    "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
+                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
+                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
+                );
+            }
+        });
+
+        // Cerrar el popup al hacer clic en el botón
         closePopup.addEventListener("click", (e) => {
             e.preventDefault();
             closeModal();
         });
 
+        // Cerrar el popup al hacer clic fuera de él
         overlay.addEventListener("click", closeModal);
-
-        window.showMedios = () => {
-            openPopup(`
-                <strong>Medios de Comunicación:</strong>
-                <ol>
-                    <li><a href="#" onclick="showInfo('WhatsApp')">WhatsApp</a></li>
-                    <li><a href="#" onclick="showInfo('Facebook')">Facebook</a></li>
-                    <li><a href="#" onclick="showInfo('Instagram')">Instagram</a></li>
-                    <li><a href="#" onclick="showInfo('Número Telefónico')">Número Telefónico</a></li>
-                    <li><a href="#" onclick="showInfo('Página Falsa')">Página Falsa</a></li>
-                    <li><a href="#" onclick="showInfo('Correo Electrónico')">Correo Electrónico</a></li>
-                </ol>
-            `);
-        };
-
-        window.showInfo = (medio) => {
-            const info = {
-                "WhatsApp": "Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones",
-                "Facebook": "NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense",
-                "Instagram": "NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense",
-                "Número Telefónico": "Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones",
-                "Página Falsa": "NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense",
-                "Correo Electrónico": "NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense"
-            };
-            openPopup(`<strong>${medio}</strong><br>${info[medio]}`);
-        };
     });
 </script>
 
