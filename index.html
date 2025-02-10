@@ -9,28 +9,56 @@
         mermaid.initialize({ startOnLoad: true });
     </script>
     <style>
+        /* Estilo para el nodo emergente */
         .popup {
-            position: absolute;
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
+            max-width: 300px;
+            text-align: center;
+        }
+        .popup .close-btn {
+            display: block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .popup .close-btn:hover {
+            background-color: #0056b3;
+        }
+        /* Fondo oscuro para el modal */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
     </style>
 </head>
 <body>
 
-<h2>Flujograma de Ejemplo</h2>
+<h2>Flujograma Completo</h2>
 
 <div class="mermaid">
     graph TD;
-        A[Estafas] --> R[Medios de Comunicación];
-        R --> S[WhatsApp];
-        R --> T[Facebook];
+        A[Estafas] --> MC[Medios de Comunicación];
         A --> B{¿Especial complejidad técnica?};
+        MC --> WA[WhatsApp];
+        MC --> FB[Facebook];
     
         B -- Sí --> C[Comunicar a Fiscalía de Cibercrimen y a Fiscalía D2T7];
         C --> D{¿Es mayor a un millón de pesos?};
@@ -53,49 +81,51 @@
         P --> Q[Comunicarlo a UJ Delitos Económicos para que carguen en la plataforma];
 </div>
 
-<!-- Contenedor para los nodos emergentes -->
-<div id="popup" class="popup"></div>
+<!-- Nodo emergente -->
+<div class="popup-overlay" id="popup-overlay"></div>
+<div class="popup" id="popup">
+    <p id="popup-content"></p>
+    <a href="#" class="close-btn" id="close-popup">Cerrar</a>
+</div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
+        // Mostrar popup con contenido específico
         const popup = document.getElementById("popup");
-        
-        // Información de los nodos
-        const nodeInfo = {
-            "WhatsApp": "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
-            "Facebook": "Facebook: Relevamiento y preservación de cuenta"
-        };
+        const overlay = document.getElementById("popup-overlay");
+        const popupContent = document.getElementById("popup-content");
+        const closePopup = document.getElementById("close-popup");
 
-        // Esperar a que Mermaid renderice los nodos
-        mermaid.initialize({ startOnLoad: true });
-        setTimeout(() => {
-            // Detectar los nodos generados
-            const nodes = document.querySelectorAll("svg g[class*='node']");
-            nodes.forEach((node) => {
-                const label = node.querySelector("text").textContent.trim();
-                if (nodeInfo[label]) {
-                    node.style.cursor = "pointer";
-                    node.addEventListener("click", (event) => {
-                        showPopup(event, nodeInfo[label]);
-                    });
-                }
-            });
-        }, 500);
-
-        // Mostrar popup
-        function showPopup(event, message) {
-            popup.textContent = message;
+        // Función para abrir el popup
+        function openPopup(content) {
+            popupContent.textContent = content;
             popup.style.display = "block";
-            popup.style.left = `${event.pageX + 10}px`;
-            popup.style.top = `${event.pageY + 10}px`;
+            overlay.style.display = "block";
         }
 
-        // Ocultar popup al hacer clic fuera
-        document.body.addEventListener("click", (event) => {
-            if (!event.target.closest(".popup")) {
-                popup.style.display = "none";
+        // Función para cerrar el popup
+        function closeModal() {
+            popup.style.display = "none";
+            overlay.style.display = "none";
+        }
+
+        // Asociar clic a los nodos interactivos
+        document.body.addEventListener("click", (e) => {
+            if (e.target.textContent === "WhatsApp") {
+                openPopup("Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones");
+            } else if (e.target.textContent === "Facebook") {
+                openPopup("Relevamiento y preservación de cuenta");
             }
         });
+
+        // Cerrar el popup al hacer clic en el botón
+        closePopup.addEventListener("click", (e) => {
+            e.preventDefault();
+            closeModal();
+        });
+
+        // Cerrar el popup al hacer clic fuera de él
+        overlay.addEventListener("click", closeModal);
     });
 </script>
 
