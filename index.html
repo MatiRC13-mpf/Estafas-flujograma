@@ -18,6 +18,8 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             display: none;
             z-index: 1000;
+            font-size: 0.9rem;
+            max-width: 300px;
         }
     </style>
 </head>
@@ -72,17 +74,45 @@
             tooltip.style.display = "none";
         };
 
-        // Añade eventos para los nodos interactivos
-        document.body.addEventListener("click", (event) => {
-            const targetId = event.target.closest("[id]")?.id;
-            if (targetId === "W") {
-                showTooltip("WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones", event);
-            } else if (targetId === "F") {
-                showTooltip("Facebook: Relevamiento y preservación de cuenta", event);
-            } else {
-                hideTooltip();
+        // Añadir interactividad después de que Mermaid renderice el diagrama
+        const addInteractivity = () => {
+            const whatsappNode = document.querySelector('[id*="W"]');
+            const facebookNode = document.querySelector('[id*="F"]');
+
+            if (whatsappNode) {
+                whatsappNode.style.cursor = "pointer";
+                whatsappNode.addEventListener("click", (event) => {
+                    showTooltip(
+                        "WhatsApp: Relevamiento y preservación de cuenta + Informe titularidad a Procesamiento de Telecomunicaciones",
+                        event
+                    );
+                });
             }
-        });
+
+            if (facebookNode) {
+                facebookNode.style.cursor = "pointer";
+                facebookNode.addEventListener("click", (event) => {
+                    showTooltip(
+                        "Facebook: Relevamiento y preservación de cuenta",
+                        event
+                    );
+                });
+            }
+
+            // Ocultar el tooltip si se hace clic fuera de los nodos
+            document.body.addEventListener("click", (event) => {
+                if (
+                    !event.target.closest('[id*="W"]') &&
+                    !event.target.closest('[id*="F"]')
+                ) {
+                    hideTooltip();
+                }
+            });
+        };
+
+        // Esperar a que Mermaid renderice el gráfico
+        mermaid.init(undefined, document.querySelectorAll(".mermaid"));
+        setTimeout(addInteractivity, 100); // Asegura que el DOM de Mermaid esté listo
     });
 </script>
 
