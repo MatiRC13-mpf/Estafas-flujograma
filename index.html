@@ -105,50 +105,73 @@
             overlay.style.display = "none";
         }
 
-        // Asociar clic a los nodos interactivos
-        document.body.addEventListener("click", (e) => {
-            if (e.target.textContent === "WhatsApp") {
-                openPopup("NECESITAS NRO. DE TELEFONO - Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones");
-            } else if (e.target.textContent === "Facebook") {
-                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
-            } else if (e.target.textContent === "Instagram") {
-                openPopup("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense");
-            } else if (e.target.textContent === "Número Telefónico") {
-                openPopup("NECESITAS NRO. DE TELEFONO - Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones");
-            } else if (e.target.textContent === "Página Falsa") {
-                openPopup("NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense");
-            } else if (e.target.textContent === "Correo Electrónico") {
-                openPopup("NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense");
-            } else if (e.target.textContent === "No") {
-                openPopup(
-                    "1. Comunicar a Fiscalía Distrito 2 Turno 7°. \n" +
-                    "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
-                    "3. Realizar Oficio para informe del banco/billetera del damnificado. \n" +
-                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
-            } else if (e.target.textContent === "No es mayor") {
-                openPopup(
-                    "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
-                    "2. Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
-                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
-                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
-            } else if (e.target.textContent === "Sí") {
-                openPopup(
-                    "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
-                    "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
-                    "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
-                    "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
-             } else if (e.target.textContent === "No es hábil") {
-                openPopup(
-                    "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
-                    "2. Avisar a Secretaria de FEC. \n" +
-                    "3. Incorporar Certificado de FEC p/autorizar Levantar Secreto y Bloqueos. \n" +
-                    "4. Redactar Oficio de Levantamiento de Secreto Bancario y Bloqueo de Fondos -con firma de AF- . \n" +
-                    "5. Redactar Oficio para Bloqueo de COELSA -con firma de AF- . \n" +
-                    "6. Agregar UJ Delitos Económicos como codependencia. \n" +
-                    "7. Comunicar a UJ Delitos Económicos el Oficio p/COELSA -ellos lo cargan en la plataforma-"
-                );
-            }
-        });
+        // Función para crear una lista ordenada desde un texto
+function createListFromText(text) {
+    const listItems = text.split("\n").map(item => `<li>${item}</li>`).join('');
+    return `<ul>${listItems}</ul>`;  // Genera una lista desordenada (ul)
+}
+
+// Asociar clic a los nodos interactivos
+document.body.addEventListener("click", (e) => {
+    if (e.target.textContent === "WhatsApp") {
+        openPopup(createListFromText("NECESITAS NRO. DE TELEFONO - Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones"));
+    } else if (e.target.textContent === "Facebook") {
+        openPopup(createListFromText("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense"));
+    } else if (e.target.textContent === "Instagram") {
+        openPopup(createListFromText("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense"));
+    } else if (e.target.textContent === "Número Telefónico") {
+        openPopup(createListFromText("NECESITAS NRO. DE TELEFONO - Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones"));
+    } else if (e.target.textContent === "Página Falsa") {
+        openPopup(createListFromText("NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense"));
+    } else if (e.target.textContent === "Correo Electrónico") {
+        openPopup(createListFromText("NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense"));
+    } else if (e.target.textContent === "No") {
+        openPopup(createListFromText(
+            "1. Comunicar a Fiscalía Distrito 2 Turno 7°. \n" +
+            "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+            "3. Realizar Oficio para informe del banco/billetera del damnificado. \n" +
+            "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
+        ));
+    } else if (e.target.textContent === "No es mayor") {
+        openPopup(createListFromText(
+            "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
+            "2. Solicitar a FEC Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
+            "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
+            "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
+        ));
+    } else if (e.target.textContent === "Sí") {
+        openPopup(createListFromText(
+            "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
+            "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
+            "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
+            "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
+        ));
+    } else if (e.target.textContent === "No es hábil") {
+        openPopup(createListFromText(
+            "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
+            "2. Avisar a Secretaria de FEC. \n" +
+            "3. Incorporar Certificado de FEC p/autorizar Levantar Secreto y Bloqueos. \n" +
+            "4. Redactar Oficio de Levantamiento de Secreto Bancario y Bloqueo de Fondos -con firma de AF- . \n" +
+            "5. Redactar Oficio para Bloqueo de COELSA -con firma de AF- . \n" +
+            "6. Agregar UJ Delitos Económicos como codependencia. \n" +
+            "7. Comunicar a UJ Delitos Económicos el Oficio p/COELSA -ellos lo cargan en la plataforma-"
+        ));
+    }
+});
+
+// Función para abrir el popup con la lista generada
+function openPopup(content) {
+    const popup = document.createElement("div");
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.backgroundColor = "white";
+    popup.style.padding = "20px";
+    popup.style.border = "1px solid #ccc";
+    popup.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.1)";
+    popup.innerHTML = content;
+    document.body.appendChild(popup);
 
         // Cerrar el popup al hacer clic en el botón
         closePopup.addEventListener("click", (e) => {
@@ -156,9 +179,13 @@
             closeModal();
         });
 
-        // Cerrar el popup al hacer clic fuera de él
-        overlay.addEventListener("click", closeModal);
+         // Cerrar el popup al hacer clic fuera de él
+    popup.addEventListener("click", function (e) {
+        if (e.target === popup) {
+            document.body.removeChild(popup);
+        }
     });
+}
 </script>
 
 </body>
