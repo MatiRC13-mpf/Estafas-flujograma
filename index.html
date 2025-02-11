@@ -112,7 +112,7 @@
             overlay.style.display = "none";
         }
 
-        // Asociar clic al nodo "Medios de Comunicación" para mostrar subnodos
+        // Asociar clic a los nodos interactivos
         document.body.addEventListener("click", (e) => {
             if (e.target.textContent === "Medios de Comunicación") {
                 const subnodos = `
@@ -159,10 +159,8 @@
                 openPopup(content);
                 e.preventDefault(); // Prevenir la acción por defecto del enlace
             }
-        });
-        
-        // Asociar clic a los nodos interactivos
-        document.body.addEventListener("click", (e) => {
+
+            // Mostrar contenido detallado para los otros nodos
             if (e.target.textContent === "No") {
                 openPopup(createListFromText(
                     "1. Agregar a Fiscalía Distrito 2 Turno 7° como codependencia y comunicar denuncia. \n" +
