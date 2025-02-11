@@ -74,7 +74,7 @@
         D -- Sí --> J{¿Es horario hábil?};
         J --> K[Sí];
 
-        J --> L[No es horario hábil];
+        J --> L[No es hábil];
 </div>
 
 <!-- Nodo emergente -->
@@ -137,7 +137,7 @@
                     "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
                     "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
                     "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales");
-            } else if (e.target.textContent === "No es horario hábil") {
+            } else if (e.target.textContent === "No es hábil") {
                 openPopup(
                     "1. Poner a FEC como codependencia y comunicar denuncia. \n" +
                     "2. Avisar a Secretaria de FEC. \n" +
