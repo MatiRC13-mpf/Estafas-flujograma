@@ -73,9 +73,10 @@
         D --> F[No es mayor];
     
         D -- Sí --> J{Medidas urgentes FEC};
-        J -- Sí --> K[Sí];
+        J -- K[¿Es horario hábil?];
 
-        J --> L[No es hábil];
+        K --> L[SI];
+        K --> M[NO];
 </div>
 
 <!-- Nodo emergente -->
@@ -140,14 +141,14 @@
                     "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
                     "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
                 ));
-            } else if (e.target.textContent === "Sí") {
+            } else if (e.target.textContent === "SI") {
                 openPopup(createListFromText(
                     "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
                     "2. Solicitar a FEC Levantamiento Secreto Bancario, Bloqueo de fondos y Bloqueo CUIL por Coelsa con trazabilidad. \n" +
                     "3. Realizar Oficio para informe del banco/billetera del damnificado (con sola firma de AF si Damnif. Relevó el Secreto Bancario). \n" +
                     "4. Certificar sobre datos titular cuenta destino: Simulación transferencia, Registro de Electores, Antecedentes Penales"
                 ));
-            } else if (e.target.textContent === "No es hábil") {
+            } else if (e.target.textContent === "NO") {
                 openPopup(createListFromText(
                     "1. Agregar a FEC como codependencia y comunicar denuncia. \n" +
                     "2. Avisar a Secretaria de FEC. \n" +
