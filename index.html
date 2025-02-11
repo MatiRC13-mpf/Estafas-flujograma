@@ -48,6 +48,13 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
+        /* Estilo para centrar el título */
+        .popup-title {
+            text-align: center; /* Centra el texto */
+            margin-bottom: 15px; /* Da espacio debajo del título */
+            font-size: 18px; /* Tamaño de fuente para el título */
+        }
     </style>
 </head>
 <body>
@@ -110,7 +117,7 @@
         document.body.addEventListener("click", (e) => {
             if (e.target.textContent === "Medios de Comunicación") {
                 const subnodos = `
-                    <strong>Medios de Comunicación</strong>
+                    <div class="popup-title"><strong>Medios de Comunicación</strong></div>
                     <ul>
                         <li><a href="#" data-node="WhatsApp" class="popup-link">WhatsApp</a></li>
                         <li><a href="#" data-node="Facebook" class="popup-link">Facebook</a></li>
