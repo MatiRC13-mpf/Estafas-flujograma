@@ -112,21 +112,58 @@
             overlay.style.display = "none";
         }
 
+        // Asociar clic al nodo "Medios de Comunicación" para mostrar subnodos
+        document.body.addEventListener("click", (e) => {
+            if (e.target.textContent === "Medios de Comunicación") {
+                const subnodos = `
+                    <strong>Medios de Comunicación</strong>
+                    <ul>
+                        <li><a href="#" data-node="WhatsApp" class="popup-link">WhatsApp</a></li>
+                        <li><a href="#" data-node="Facebook" class="popup-link">Facebook</a></li>
+                        <li><a href="#" data-node="Instagram" class="popup-link">Instagram</a></li>
+                        <li><a href="#" data-node="Número Telefónico" class="popup-link">Número Telefónico</a></li>
+                        <li><a href="#" data-node="Página Falsa" class="popup-link">Página Falsa</a></li>
+                        <li><a href="#" data-node="Correo Electrónico" class="popup-link">Correo Electrónico</a></li>
+                    </ul>
+                `;
+                openPopup(subnodos);
+            }
+
+            // Abrir los popups con los detalles cuando se hace clic en un subnodo
+            if (e.target.classList.contains("popup-link")) {
+                const node = e.target.getAttribute("data-node");
+                let content = "";
+                switch (node) {
+                    case "WhatsApp":
+                        content = "NECESITAS NRO. DE TELEFONO - Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones";
+                        break;
+                    case "Facebook":
+                        content = "NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense";
+                        break;
+                    case "Instagram":
+                        content = "NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense";
+                        break;
+                    case "Número Telefónico":
+                        content = "NECESITAS NRO. DE TELEFONO - Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones";
+                        break;
+                    case "Página Falsa":
+                        content = "NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense";
+                        break;
+                    case "Correo Electrónico":
+                        content = "NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense";
+                        break;
+                    default:
+                        content = "No hay información disponible.";
+                        break;
+                }
+                openPopup(content);
+                e.preventDefault(); // Prevenir la acción por defecto del enlace
+            }
+        });
+        
         // Asociar clic a los nodos interactivos
         document.body.addEventListener("click", (e) => {
-            if (e.target.textContent === "WhatsApp") {
-                openPopup(createListFromText("NECESITAS NRO. DE TELEFONO - Oficiar: Relevamiento y preservación de cuenta a Internet Forense + Informe titularidad a Procesamiento de Telecomunicaciones"));
-            } else if (e.target.textContent === "Facebook") {
-                openPopup(createListFromText("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense"));
-            } else if (e.target.textContent === "Instagram") {
-                openPopup(createListFromText("NECESITAS ID Y NOMBRE DE PERFIL - Oficiar: Relevamiento y preservación de cuenta a Internet Forense"));
-            } else if (e.target.textContent === "Número Telefónico") {
-                openPopup(createListFromText("NECESITAS NRO. DE TELEFONO - Oficiar: Informe titularidad a Procesamiento de Telecomunicaciones"));
-            } else if (e.target.textContent === "Página Falsa") {
-                openPopup(createListFromText("NECESITAS URL DE LA PÁGINA - Oficiar: Relevamiento y preservación de página a Internet Forense"));
-            } else if (e.target.textContent === "Correo Electrónico") {
-                openPopup(createListFromText("NECESITAS DIRECCIÓN DEL MAIL - Oficiar: Relevamiento y preservación de Correo a Internet Forense"));
-            } else if (e.target.textContent === "No") {
+            if (e.target.textContent === "No") {
                 openPopup(createListFromText(
                     "1. Agregar a Fiscalía Distrito 2 Turno 7° como codependencia y comunicar denuncia. \n" +
                     "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
