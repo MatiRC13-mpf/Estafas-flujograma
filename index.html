@@ -24,7 +24,7 @@
             max-width: 300px;
             text-align: left; /* Alineación a la izquierda */
             white-space: pre-wrap; /* Para respetar saltos de línea */
-            max-height: 600px; /* Limitar la altura máxima */
+            max-height: 750px; /* Limitar la altura máxima */
             overflow-y: auto; /* Para permitir desplazamiento si el contenido es muy largo */
         }
         .popup .close-btn {
@@ -162,18 +162,25 @@
                 openPopup(content);
                 e.preventDefault(); // Prevenir la acción por defecto del enlace
             }
+            
+            // Asociar clic a los nodos interactivos
+            if (e.target.textContent === "¿Especial complejidad técnica?") {
+        const subnodos = `
+            <div class="popup-title"><strong>Ejemplos de casos</strong></div>
+            <ul>
+                <li>1. Apps de Acceso Remoto</li>
+                <li>2. Páginas falsas para estafa por tareas (Mercado Libre, Kohl's, etc.)</li>
+                <li>3. Phishing (obtienen los datos a partir de una web a la que acceden por publicidad, link o correo electrónico malicioso)</li>
+                <li>4. Criptomonedas</li>
+                <li>5. Transferencias en moneda extranjera con cuentas del exterior</li>
+                <li>6. Ransomware</li>
+            </ul>
+        `;
+        openPopup(subnodos);
+    }
 
             // Mostrar contenido detallado para los otros nodos
-            if (e.target.textContent === "¿Especial complejidad técnica?") {
-                openPopup(createListFromText(
-                    "1. Apps de Acceso Remoto. \n" +
-                    "2. Páginas falsas para estafa por tareas (Mercado Libre, Kohl's, etc.). \n" +
-                    "3. Phishing (obtienen los datos a partir de una web a la que acceden por publicidad, link o correo electrónico malicioso). \n" +
-                    "4. Criptomonedas. \n" +
-                    "5. Transferencias en moneda extranjera con cuentas del exterior. \n" +
-                    "6. Ransomware."                    
-                ));
-            } else if (e.target.textContent === "No") {
+            if (e.target.textContent === "No") {
                 openPopup(createListFromText(
                     "1. Agregar a Fiscalía Distrito 2 Turno 7° como codependencia y comunicar denuncia. \n" +
                     "2. Solicitar a Fiscalía Levantamiento Secreto Bancario y Bloqueo de fondos. \n" +
