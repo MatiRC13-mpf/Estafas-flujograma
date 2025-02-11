@@ -21,9 +21,11 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             z-index: 1000;
-            max-width: 200px;
+            max-width: 300px;
             text-align: left; /* Alineación a la izquierda */
             white-space: pre-wrap; /* Para respetar saltos de línea */
+            max-height: 300px; /* Limitar la altura máxima */
+            overflow-y: auto; /* Para permitir desplazamiento si el contenido es muy largo */
         }
         .popup .close-btn {
             display: block;
@@ -126,7 +128,7 @@
                         <li><a href="#" data-node="Página Falsa" class="popup-link">Página Falsa</a></li>
                         <li><a href="#" data-node="Correo Electrónico" class="popup-link">Correo Electrónico</a></li>
                     </ul>
-                `;
+                ;
                 openPopup(subnodos);
             }
 
